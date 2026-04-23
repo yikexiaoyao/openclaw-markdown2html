@@ -1,5 +1,4 @@
+config.json
+output/
 __pycache__/
 *.pyc
-*.html
-output/
-.DS_Store
