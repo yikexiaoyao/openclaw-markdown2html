@@ -1,167 +1,117 @@
-# Markdown to HTML Skill
+---
+name: markdown-to-html
+description: Convert Markdown text to beautifully styled, self-contained HTML with embedded CSS. Perfect for newsletters, documentation, reports, and email templates.
+metadata:
+  openclaw:
+    emoji: "📄"
+    always: false
+    requires:
+      bins: ["python3"]
+      env: []
+triggers:
+  - skill md2html
+  - skill markdown-to-html
+  - 技能 md2html
+  - 技能 markdown-to-html
+  - convert markdown to html
+  - markdown to html
+  - render markdown
+  - style markdown
+  - skill md2html help
+  - 技能 md2html help
+---
 
-## 功能概述
-将 Markdown 文件转换为美观的 HTML 文件，支持 GitHub Flavored Markdown、表格、代码块和语法高亮。
+# Markdown to HTML Converter
 
-## 安装
+A zero-dependency Python tool that converts Markdown files into beautiful, self-contained HTML documents with embedded CSS styling. No external libraries needed — uses only Python's standard library.
+
+## Features
+
+- **Full Markdown support**: Headings, bold, italic, strikethrough, links, images, code blocks with syntax hints, blockquotes, ordered and unordered lists, horizontal rules, and tables
+- **Two built-in themes**: Light (GitHub-inspired) and Dark mode with carefully chosen colors
+- **Self-contained output**: All CSS is embedded inline — the resulting HTML file works anywhere with no external dependencies
+- **Responsive design**: Output looks great on desktop and mobile screens
+- **Stdin support**: Pipe content directly for use in shell pipelines
+
+## Usage Examples
+
+Convert a file with the default light theme:
 ```bash
-# 从 skillhub 安装
-skillhub install markdown-to-html
-
-# 或从本地安装
-cd /root/.openclaw/workspace/skills/markdown-to-html
-bash setup.sh
+python main.py README.md -o readme.html
 ```
 
-## 使用方法
-
-### 基本命令
-```
-md2html <输入文件>                    # 转换单个文件
-md2html <输入目录> -o <输出目录>       # 批量转换目录
-md2html --preview <输入文件>          # 预览 HTML（不保存）
-md2html --help                        # 显示帮助信息
-```
-
-### 命令别名
-```
-markdown2html        # 同 md2html
-md-to-html           # 同 md2html
-markdown             # 同 md2html
-```
-
-### 示例
-```
-用户: md2html README.md
-助手: ✅ 转换完成！
-      📄 输入：README.md
-      📄 输出：./output/README.html
-      📊 大小：12.5 KB
-      
-      预览链接：file:///root/.openclaw/workspace/skills/markdown-to-html/output/README.html
-
-用户: md2html docs/ -o html/
-助手: ✅ 批量转换完成！
-      📄 处理文件：5 个
-      📄 成功：5 个
-      📄 失败：0 个
-      📂 输出目录：html/
-
-用户: md2html --preview report.md
-助手: 📄 预览模式：
-      [显示 HTML 预览内容]
-      
-      💡 提示：使用 md2html report.md 保存到文件
-```
-
-## 配置说明
-
-技能支持以下配置（编辑 `config.json`）:
-
-### 输出配置
-```json
-{
-    "output": {
-        "directory": "./output",    # 输出目录
-        "extension": ".html"        # 文件扩展名
-    }
-}
-```
-
-### 样式配置
-```json
-{
-    "style": {
-        "enabled": true,            # 是否启用 CSS
-        "theme": "default"          # 主题名称
-    }
-}
-```
-
-### 扩展配置
-```json
-{
-    "options": {
-        "extensions": [
-            "tables",           # 支持表格
-            "fenced_code",      # 支持代码块
-            "codehilite"        # 支持语法高亮
-        ],
-        "safe_mode": "escape"   # 安全模式：转义 HTML
-    }
-}
-```
-
-## 高级功能
-
-### 批量转换
-支持递归转换整个目录：
+Use the dark theme for a presentation:
 ```bash
-md2html input_dir/ -o output_dir/
+python main.py notes.md -o notes.html --theme dark --title "Meeting Notes"
 ```
 
-### 自定义 CSS
-编辑 `config.json` 中的 `style.theme` 或使用自定义 CSS 文件：
+Pipe from another command:
 ```bash
-md2html input.md --css custom.css
+cat CHANGELOG.md | python main.py - -o changelog.html
 ```
 
-### 代码高亮
-自动检测代码块语言并应用语法高亮：
-```markdown
-```python
-print("Hello World")
-```
+Use in a newsletter pipeline:
+```bash
+python main.py issue-42.md --title "Lobster Diary #42" -o issue.html
 ```
 
-### 表格支持
-支持 GitHub 风格的表格：
-```markdown
-| 列 1 | 列 2 |
-|------|------|
-| 数据 1 | 数据 2 |
+## Supported Markdown Elements
+
+| Element | Syntax | Supported |
+|---------|--------|-----------|
+| Headings | `# H1` through `###### H6` | ✅ |
+| Bold | `**text**` | ✅ |
+| Italic | `*text*` | ✅ |
+| Strikethrough | `~~text~~` | ✅ |
+| Links | `[text](url)` | ✅ |
+| Images | `![alt](url)` | ✅ |
+| Code blocks | Triple backtick with language | ✅ |
+| Inline code | Single backtick | ✅ |
+| Blockquotes | `> text` | ✅ |
+| Unordered lists | `- item` or `* item` | ✅ |
+| Ordered lists | `1. item` | ✅ |
+| Horizontal rules | `---` | ✅ |
+
+## Command Line Options
+
+- `input` — Markdown file path, or `-` for stdin
+- `-o, --output` — Output HTML file (defaults to stdout)
+- `--theme` — `light` (default) or `dark`
+- `--title` — HTML document title (default: "Document")
+
+## Help 帮助信息
+
+发送 `skill md2html help` 或 `技能 md2html help` 查看本技能的详细使用说明。
+
+### 命令列表
+
+| 命令 | 用途 | 效果 |
+|------|------|------|
+| `skill md2html <文件>` | 转换 Markdown 为 HTML | 生成带 CSS 样式的独立 HTML 文件 |
+| `skill md2html <文件> -o <输出>` | 指定输出文件名 | 自定义输出 HTML 文件路径 |
+| `skill md2html <文件> --theme dark` | 使用深色主题 | 生成暗色风格 HTML |
+| `skill md2html <文件> --title "标题"` | 设置文档标题 | 自定义 HTML `<title>` 和页面标题 |
+| `skill md2html help` | 显示帮助信息 | 输出本说明文档 |
+
+### 使用示例
+
+```bash
+# 基础转换（浅色主题）
+skill md2html README.md
+
+# 指定输出文件
+skill md2html notes.md -o notes.html
+
+# 深色主题 + 自定义标题
+skill md2html presentation.md --theme dark --title "会议笔记"
+
+# 管道输入
+cat CHANGELOG.md | skill md2html - -o changelog.html
 ```
 
-## 开发扩展
+### 支持的 Markdown 元素
 
-### 项目结构
-```
-markdown-to-html/
-├── md2html.py          # 主转换脚本
-├── setup.sh            # 安装脚本
-├── config.json         # 配置文件
-├── SKILL.md            # 技能文档
-├── package.json        # 包配置
-└── output/             # 输出目录
-```
-
-### 添加新扩展
-在 `config.json` 的 `options.extensions` 数组中添加新的 Markdown 扩展。
-
-### 自定义主题
-创建新的 CSS 文件并修改 `config.json` 中的 `style.theme`。
-
-## 版本历史
-
-### v1.0.0 (2026-04-23)
-- 初始版本发布
-- 支持基本 Markdown 转换
-- 支持表格和代码块
-- 支持自定义 CSS
-- 批量转换功能
-- 预览模式
-
-## 技术支持
-
-### 问题反馈
-- GitHub Issues: https://github.com/openclaw/skills/issues
-- Discord 社区: https://discord.gg/clawd
-
-### 贡献指南
-1. Fork 项目仓库
-2. 创建功能分支
-3. 提交更改
-4. 创建 Pull Request
-
-## 许可证
-MIT License - 详见 LICENSE 文件
+- 标题 (H1-H6)、粗体、斜体、删除线
+- 链接、图片、代码块（含语法高亮提示）
+- 行内代码、引用块、有序/无序列表
+- 水平分割线、表格

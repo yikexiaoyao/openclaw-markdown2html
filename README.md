@@ -1,74 +1,75 @@
-# Markdown 转 HTML 转换器
+# OpenClaw Markdown to HTML
 
-一个通用的 OpenClaw 技能，用于将 Markdown 文件转换为 HTML，支持 GitHub 风格 Markdown。
+将 Markdown 文本转换为精美排版的独立 HTML 文件，内置 CSS 样式，无需外部依赖。
 
-## 功能特性
+## 功能
 
-- ✅ GitHub 风格 Markdown 支持
-- ✅ 表格渲染
-- ✅ 代码语法高亮
-- ✅ 自动生成目录
-- ✅ 自定义 CSS 支持
-- ✅ 响应式设计
+- ✅ 完整的 Markdown 支持（标题、粗体、斜体、删除线、链接、图片、代码块、引用、列表、表格）
+- ✅ 两套内置主题：浅色（GitHub 风格）和深色
+- ✅ 自包含输出：所有 CSS 内嵌，HTML 文件随处可用
+- ✅ 响应式设计：桌面端和移动端均美观
+- ✅ 零依赖：仅使用 Python 标准库
 
-## 安装
+## 触发命令
+
+```
+skill md2html <文件>                    # 基础转换
+skill md2html <文件> -o <输出>           # 指定输出文件
+skill md2html <文件> --theme dark        # 深色主题
+skill md2html <文件> --title "标题"      # 设置文档标题
+cat file.md | skill md2html - -o out.html  # 管道输入
+skill md2html help                      # 查看帮助
+```
+
+也支持中文触发：`技能 md2html`
+
+## 使用示例
 
 ```bash
-# 手动克隆
-git clone https://github.com/yikexiaoyao/markdown-to-html.git
-cd markdown-to-html
+# 基础转换（浅色主题）
+skill md2html README.md
+
+# 指定输出文件
+skill md2html notes.md -o notes.html
+
+# 深色主题 + 自定义标题
+skill md2html presentation.md --theme dark --title "会议笔记"
+
+# 管道输入
+cat CHANGELOG.md | skill md2html - -o changelog.html
 ```
 
-## 使用方法
+## 命令行选项
 
-### 命令行
+| 选项 | 说明 | 默认值 |
+|------|------|--------|
+| `input` | Markdown 文件路径，`-` 表示标准输入 | — |
+| `-o, --output` | 输出 HTML 文件路径 | 标准输出 |
+| `--theme` | 主题：`light` 或 `dark` | `light` |
+| `--title` | HTML 文档标题 | `Document` |
 
-```bash
-# 基本转换
-python3 md2html.py input.md -o output.html
+## 支持的 Markdown 元素
 
-# 使用自定义 CSS
-python3 md2html.py input.md -o output.html --css style.css
-
-# 查看帮助
-python3 md2html.py --help
-```
-
-### Python 调用
-
-```python
-import subprocess
-
-# 调用转换脚本
-subprocess.run([
-    'python3', 'md2html.py', 
-    'input.md', 
-    '-o', 'output.html'
-])
-```
+| 元素 | 语法 | 支持 |
+|------|------|------|
+| 标题 | `# H1` ~ `###### H6` | ✅ |
+| 粗体 | `**text**` | ✅ |
+| 斜体 | `*text*` | ✅ |
+| 删除线 | `~~text~~` | ✅ |
+| 链接 | `[text](url)` | ✅ |
+| 图片 | `![alt](url)` | ✅ |
+| 代码块 | 三反引号 + 语言 | ✅ |
+| 行内代码 | 单反引号 | ✅ |
+| 引用块 | `> text` | ✅ |
+| 无序列表 | `- item` | ✅ |
+| 有序列表 | `1. item` | ✅ |
+| 水平分割线 | `---` | ✅ |
+| 表格 | `| col | col |` | ✅ |
 
 ## 依赖
 
-- Python 3.6+
-- markdown 库
+- Python 3（标准库，无需额外安装任何包）
 
-安装依赖：
-```bash
-pip install markdown
-```
+## License
 
-## 输出示例
-
-转换后的 HTML 包含：
-- 响应式布局（最大宽度 900px）
-- GitHub 风格样式
-- 代码高亮
-- 表格样式
-
-## 许可证
-
-MIT License - 详见 [LICENSE](LICENSE) 文件
-
-## 作者
-
-OpenClaw Community
+MIT
