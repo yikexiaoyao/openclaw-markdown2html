@@ -1,6 +1,6 @@
 ---
 name: openclaw-markdown2html
-description: Convert Markdown text to beautifully styled, self-contained HTML with embedded CSS. Perfect for newsletters, documentation, reports, and email templates.
+description: Convert Markdown text to beautifully styled, self-contained HTML with embedded CSS. Perfect for newsletters, documentation, reports, and email templates. Trigger commands：skill md2html、skill markdown-to-html、技能 md2html、技能 markdown-to-html、convert markdown to html、markdown to html、render markdown、style markdown、skill md2html help、技能 md2html help。
 metadata:
   openclaw:
     emoji: "📄"
